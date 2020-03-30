@@ -234,7 +234,7 @@ class StyledWrapper extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.shadowRoot.innerHTML = `<style>${this.style(
             this.props
-        )}</style><div><slot></slot></div>`;
+        )}</style><slot></slot>`;
     }
 
     style(props) {
@@ -252,6 +252,27 @@ const makeWrapper = (name, styler) => {
         }
     );
 };
+
+/////////////////////////
+//Router
+/////////////////////////
+
+class Router extends HTMLElement {
+    constructor(state = {}) {
+        super();
+        this.props = captureProps(this);
+        this.attachShadow({ mode: 'open' });
+        this.route(this.props.default);
+    }
+
+    route(component, props) {
+        const slots = `<slot></slot>`;
+        const opens = `<${component} ${props}>`;
+        this.shadowRoot.innerHTML = `${opens}${slots}</${component}>`;
+    }
+}
+
+window.customElements.define('a-router', Router);
 
 ////////////////////////////
 // FormTool
