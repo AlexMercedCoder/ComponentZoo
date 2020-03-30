@@ -2,11 +2,11 @@
 
 A Library of Classes for Building Web Components
 
-CDN Link: http://www.alexmercedcoder.com/basic.js (11kb)
+CDN Link: http://www.alexmercedcoder.com/componentzoo.js (11kb)
 
-CDN Link (ES 6 MODULE VERSION): http://www.alexmercedcoder.com/basicmodule.js (13 kb)
+CDN Link (ES 6 MODULE VERSION): http://www.alexmercedcoder.com/componentzoomodule.js (13 kb)
 
-CDN Link (Node MODULE.Exports VERSION): http://www.alexmercedcoder.com/basicnpm.js (14 kb)
+CDN Link (Node MODULE.Exports VERSION): http://www.alexmercedcoder.com/componentzoonpm.js (14 kb)
 
 # StyledWrapper
 
