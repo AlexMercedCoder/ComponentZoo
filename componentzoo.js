@@ -275,18 +275,22 @@ class Router extends HTMLElement {
 window.customElements.define('a-router', Router);
 
 ////////////////////////////
-// FormTool
+// Formy
 ////////////////////////////
 
-class FormTool {
-    constructor(form) {
-        this.form = form;
+class MyForm extends HTMLElement {
+    constructor() {
+        super();
+        this.props = captureProps(this);
+        this.form = document.getElementById(this.props.form);
         this.fields = [...this.form.children].filter((value) => {
             return (
                 (value.tagName === 'INPUT' || value.tagName === 'TEXTAREA') &&
                 value.type != 'submit'
             );
         });
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `<slot></slot>`;
     }
 
     grabValues() {
@@ -314,3 +318,5 @@ class FormTool {
         });
     }
 }
+
+window.customElements.define('my-form', MyForm);

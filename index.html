@@ -12,7 +12,26 @@
         </color-title>
         <a-router default="hello-world"><h2>I'm here</h2></a-router>
         <button
-        onclick="document.querySelector('a-router').route('hello-world2',
+            onclick="document.querySelector('a-router').route('hello-world2',
         'user=joe')"
+        >
+            click me
+        </button>
+        <my-form form="myform">
+            <form id="myform">
+                <input type="text" name="one" />
+                <input type="text" name="two" />
+                <input type="text" name="three" />
+                <textarea name="four"></textarea>
+            </form>
+            <button
+                onclick="console.log(document.querySelector('my-form').grabValues())"
+            >
+                Form Data
+            </button>
+            <button onclick="document.querySelector('my-form').clearForm()">
+                Clear Values
+            </button>
+        </my-form>
     </body>
 </html>

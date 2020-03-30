@@ -247,9 +247,20 @@ disconnectedCallback(){} => Runs when component is removed from dom
 
 _read JavaScript Documentation regarding adoptedCallback and attributeChangedCallback_
 
-# FormTool
+# Router <a-router>
 
-This is a class whose constructor takes a form element and allows you to grab the form data and clear the form with each.
+A router component with one function, route(component, props). The first argument is a string with the component tag name and the second argument is a string with the props the tag may need. refer to the below example.
+
+```
+<a-router default="hello-world"><h2>I'm here</h2></a-router>
+<button
+onclick="document.querySelector('a-router').route('hello-world2',
+'user=joe')">click me</button>
+```
+
+# my-form
+
+This is an element for tracking forms, give the element a form attribute that matches the id of the form it tracks
 
 **this.grabValues()** returns object with form values with name property as keys
 
@@ -258,20 +269,16 @@ This is a class whose constructor takes a form element and allows you to grab th
 **this.fillFields(object)** takes object fills in the form fields where key matches input name property
 
 ```
-const form = document.querySelector('form');
-
-const testForm = new FormTool(form);
-```
-
-```
+<my-form form="myform">
 <form id="myform">
     <input type="text" name="one" />
     <input type="text" name="two" />
     <input type="text" name="three" />
     <textarea name="four"></textarea>
 </form>
-<button onclick="console.log(testForm.grabValues())">Form Data</button>
-<button onclick="testForm.clearForm()">Clear Values</button>
+<button onclick="console.log(document.querySelector('my-form').grabValues())">Form Data</button>
+<button onclick="document.querySelector('my-form').clearForm()">Clear Values</button>
+</my-form>
 ```
 
 FormTool has two methods, grabValues() which will return you an object with the forms values using the name property as the key and the value property as the value. The second method is clearForm which will render the property of value of all form elements to null. Won't grab or clear the value on submit inputs but will for all others.
