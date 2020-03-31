@@ -1,6 +1,6 @@
 {
     "name": "componentzoo",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A Library of Classes for Building Web Components",
     "main": "componentzoonpm.js",
     "scripts": {

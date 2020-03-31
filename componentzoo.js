@@ -352,6 +352,7 @@ class RenderGroup extends HTMLElement {
     }
 
     render() {
+        this.slotted = this.shadowRoot.querySelector('slot').assignedNodes();
         this.slotted.forEach((value) => {
             if (value.rend) {
                 value.rend();
