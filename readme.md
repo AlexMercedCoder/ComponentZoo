@@ -247,15 +247,44 @@ disconnectedCallback(){} => Runs when component is removed from dom
 
 _read JavaScript Documentation regarding adoptedCallback and attributeChangedCallback_
 
-# Router <a-router>
+# m-router and m-link
 
-A router component with one function, route(component, props). The first argument is a string with the component tag name and the second argument is a string with the props the tag may need. refer to the below example.
+Very similar to most routers, the router tag specifies where links will render and link creates a link that when clicked will render a particular component to the router with the same name attribute. Each router must have a unique name attribute.
+
+-   routers have a default attribute to specify a component to start with
+-   links have a target attribute to specify what component will be rendered if clicked.
+
+Given these two Components
 
 ```
-<a-router default="hello-world"><h2>I'm here</h2></a-router>
-<button
-onclick="document.querySelector('a-router').route('hello-world2',
-'user=joe')">click me</button>
+makeLiveComponent({
+    prefix: 'hello',
+    name: 'world',
+    store: '{hello: ""}',
+    builder: (store) => {
+        const props = captureProps(this);
+        return `<h1>Hello World</h1>`;
+    }
+});
+
+makeLiveComponent({
+    prefix: 'goodbye',
+    name: 'world',
+    store: '{hello: ""}',
+    builder: (store) => {
+        const props = captureProps(this);
+        return `<h1>Goodbye World</h1>`;
+    }
+});
+```
+
+Here is an example of using the router and link tags
+
+```
+<m-router name="main" default="hello-world" props="user='steve'"></m-router>
+<m-link name="main" target="goodbye-world" props="user='steve'">
+    Click Me to Say Goodbye
+</m-link>
 ```
 
 # my-form
@@ -282,6 +311,45 @@ This is an element for tracking forms, give the element a form attribute that ma
 ```
 
 FormTool has two methods, grabValues() which will return you an object with the forms values using the name property as the key and the value property as the value. The second method is clearForm which will render the property of value of all form elements to null. Won't grab or clear the value on submit inputs but will for all others.
+
+# RenderGroup
+
+You can group components as children of render group and call on RenderGroups render function to re-render all slotted components.
+
+your html
+
+```
+<render-group>
+    <hello-world></hello-world>
+    <hello-world></hello-world>
+    <hello-world></hello-world>
+</render-group>
+<button onclick="update()">Click Me</button>
+
+```
+
+your JavaScript
+
+```
+let storage = 'hello';
+
+class HelloWorld extends BasicElement {
+    constructor() {
+        super();
+    }
+
+    render() {
+        return `<h1>${storage}</h1>`;
+    }
+}
+
+window.customElements.define('hello-world', HelloWorld);
+
+const update = () => {
+    storage = 'goodbye';
+    document.querySelector('render-group').render();
+};
+```
 
 ## Functions
 

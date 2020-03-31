@@ -253,26 +253,44 @@ export const makeWrapper = (name, styler) => {
     );
 };
 
-/////////////////////////
-//Router
-/////////////////////////
+///////////////////
+// mRouter and mLink
+///////////////////
 
-export class Router extends HTMLElement {
-    constructor(state = {}) {
+export const mRoutes = {};
+
+export class MercedRouter extends HTMLElement {
+    constructor() {
         super();
-        this.props = captureProps(this);
         this.attachShadow({ mode: 'open' });
-        this.route(this.props.default);
+        this.props = captureProps(this);
+        mRoutes[this.props.name] = this;
+        this.shadowRoot.innerHTML = `<${this.props.default} ${this.props.props}><slot></slot></${this.props.default}>`;
     }
 
-    route(component, props) {
-        const slots = `<slot></slot>`;
-        const opens = `<${component} ${props}>`;
-        this.shadowRoot.innerHTML = `${opens}${slots}</${component}>`;
+    route(target, props) {
+        this.shadowRoot.innerHTML = `<${target} ${props}><slot></slot></${target}>`;
     }
 }
 
-window.customElements.define('a-router', Router);
+window.customElements.define('m-router', MercedRouter);
+
+export class MercedLink extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.props = captureProps(this);
+        this.shadowRoot.innerHTML = `<span style="cursor: pointer;"><slot></slot></span>`;
+        this.shadowRoot.querySelector('span').addEventListener('click', () => {
+            mRoutes[this.props.name].route(
+                this.props.target,
+                this.props.props ? this.props.props : ''
+            );
+        });
+    }
+}
+
+window.customElements.define('m-link', MercedLink);
 
 ////////////////////////////
 // Formy
@@ -320,3 +338,29 @@ export class MyForm extends HTMLElement {
 }
 
 window.customElements.define('my-form', MyForm);
+
+/////////////////////////////////
+//RenderGroup
+/////////////////////////////////
+
+export class RenderGroup extends HTMLElement {
+    constructor() {
+        super();
+        this.attachShadow({ mode: 'open' });
+        this.shadowRoot.innerHTML = `<slot></slot>`;
+        this.slotted = this.shadowRoot.querySelector('slot').assignedNodes();
+    }
+
+    render() {
+        this.slotted.forEach((value) => {
+            if (value.rend) {
+                value.rend();
+            }
+            if (value.build) {
+                value.build();
+            }
+        });
+    }
+}
+
+window.customElements.define('render-group', RenderGroup);
