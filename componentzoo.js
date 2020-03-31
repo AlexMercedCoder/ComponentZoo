@@ -364,3 +364,46 @@ class RenderGroup extends HTMLElement {
 }
 
 window.customElements.define('render-group', RenderGroup);
+
+/////////////////////////
+//FunComponent
+////////////////////////
+
+const funComponent = (config) => {
+    class ThisComponent extends HTMLElement {
+        constructor() {
+            super();
+            this.state = config.state;
+            this.props = captureProps(this);
+            this.attachShadow({ mode: 'open' });
+            this.rend();
+            config.construct ? config.construct(this) : null;
+        }
+
+        rend() {
+            this.props = captureProps(this);
+            this.shadowRoot.innerHTML = config.render(this.state, this.props);
+        }
+
+        setState(newState) {
+            this.state = newState;
+            this.rend();
+        }
+
+        connectedCallback() {
+            config.connected ? config.connected(this) : null;
+        }
+
+        disconnectedCallback() {
+            config.disconnected ? config.disconnected(this) : null;
+        }
+
+        hookGen() {
+            if (config.hookGen) {
+                return config.hookGen(this);
+            }
+        }
+    }
+
+    window.customElements.define(config.name, ThisComponent);
+};
