@@ -49,10 +49,15 @@ class BasicElement extends HTMLElement {
     rend() {
         this.props = captureProps(this);
         this.shadowRoot.innerHTML = this.render(this.state, this.props);
+        this.postRender(this.state, this.props);
     }
 
     render(state, props) {
         return ``;
+    }
+
+    postRender(state, props) {
+        return null;
     }
 
     setState(newState) {
@@ -158,6 +163,16 @@ class ChainElement extends HTMLElement {
             ChainElement.storage,
             ChainElement.query
         );
+        this.postBuild(
+            this.state,
+            this.props,
+            ChainElement.storage,
+            ChainElement.query
+        );
+    }
+
+    postBuild(state, props, global, query) {
+        return null;
     }
 
     setState(newState) {
@@ -184,6 +199,11 @@ class MercedElement extends HTMLElement {
     build() {
         this.props = captureProps(this);
         this.shadowRoot.innerHTML = this.builder(this.state, this.props);
+        this.postBuild(state, props);
+    }
+
+    postBuild(state, props) {
+        return null;
     }
 
     setState(newState) {
@@ -384,6 +404,11 @@ export const funComponent = (config) => {
         rend() {
             this.props = captureProps(this);
             this.shadowRoot.innerHTML = config.render(this.state, this.props);
+            this.postRender(this, this.state, this.props);
+        }
+
+        postRender(element, state, props) {
+            config.postRender ? config.postRender(state, props) : '';
         }
 
         setState(newState) {

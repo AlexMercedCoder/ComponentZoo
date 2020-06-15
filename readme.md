@@ -75,6 +75,8 @@ Two rules in constructing a new components:
 1. Pass the initial state to super() in the constructor (defaults to an empty object)
 2. define a render function that returns your template string
 
+-   Override the postRender(state, props) function which will run after every render
+
 # ChainElement
 
 ## Creating a component
@@ -185,6 +187,8 @@ Use the standard Web Component callbacks for lifecycle Functions
 connectedCallback() => on mount
 disconnectedCallback() => on dismount
 
+-   can also define a postBuild(state, props, global, query) function that will run immediately after each render, good for adding eventlisteners to your template
+
 # MercedElement
 
 MercedElement is a base class for creating components. In the constructor use the super to define the template builder function, state, and reducer. Afterwards use the MercedElement.makeTag(name, class) static function to register the HTML tag
@@ -244,6 +248,8 @@ Outside the constructor just override the same functions used in the native web 
 connectedCallback(){} => Runs when components mounted
 
 disconnectedCallback(){} => Runs when component is removed from dom
+
+postBuild(state, props){} => runs after every render completes
 
 _read JavaScript Documentation regarding adoptedCallback and attributeChangedCallback_
 
@@ -406,6 +412,8 @@ Properties that can be passed into the config object when creating components wi
 -   construct: a function that takes the instance as an argument that is called in the constructor, can be used to add actions to the constructor.
 
 -   hookGen: a function that takes the instance as an argument that is meant to define addtional function/methods and return them when the hookGen method is called on the instance.
+
+-   postRender: (element, state, props) => function that runs after each render, use for adding event listeners
 
 ## Functions
 
