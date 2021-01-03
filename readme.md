@@ -2,11 +2,11 @@
 
 A Library of Classes for Building Web Components
 
-CDN Link: http://www.alexmercedcoder.com/componentzoo.js (11kb)
+CDN Link: https://res.cloudinary.com/dithdroai/raw/upload/v1609690414/libraries/componentzoo_ds7u5v.js (11kb)
 
-CDN Link (ES 6 MODULE VERSION): http://www.alexmercedcoder.com/componentzoomodule.js (13 kb)
+CDN Link (ES 6 MODULE VERSION): https://res.cloudinary.com/dithdroai/raw/upload/v1609690414/libraries/componentzoomodule_u14egk.js (13 kb)
 
-CDN Link (Node MODULE.Exports VERSION): http://www.alexmercedcoder.com/componentzoonpm.js (14 kb)
+**NPM** ```npx create-componentzoo-app projectName``` or to just download library to custom build ```npm install componentzoo```
 
 # StyledWrapper
 
